@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Connection Planner</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e9ecef; /* Light background */
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        }
+        #app {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+            max-width: 600px;
+            margin: 20px auto;
+            transition: transform 0.3s; /* Animation on hover */
+        }
+        #app:hover {
+            transform: scale(1.02); /* Slight zoom effect */
+        }
+        label {
+            font-weight: bold;
+            margin-top: 15px;
+            display: block;
+        }
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s; /* Transition for focus */
+            box-sizing: border-box; /* Include padding and border in width */
+        }
+        input[type="text"] {
+            border: 1px solid #ced4da;
+        }
+        input[type="text"]:focus {
+            border-color: #007bff; /* Highlight on focus */
+        }
+        button {
+            padding: 12px 20px;
+            background-color: #28a745; /* Green button */
+            color: white;
+            border: 1px solid transparent; /* Remove strange border */
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+        h2 {
+            margin-top: 30px;
+            color: #495057;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0 15px;
+        }
+        li {
+            padding: 10px;
+            margin: 6px 0;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #ced4da;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            word-wrap: break-word;
+        }
+        .share-button {
+            background-color: #007bff; /* Blue button */
+            margin-top: 20px;
+        }
+        .share-button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+        .points {
+            font-size: 18px; /* Larger font for points */
+            color: #007bff; /* Blue color for points */
+            margin-top: 20px;
+            text-align: center; /* Centered points display */
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Social Connection Planner</h1>
+        <label for="socialGoal">Social Goal for Today:</label>
+        <input type="text" id="socialGoal" placeholder="What social goal do you want to achieve?">
+        <button onclick="saveGoal()">Save Goal</button>
+        <h2>Your Goals</h2>
+        <ul id="goalList"></ul>
+        <button class="share-button" onclick="shareGoals()">Share Your Goal</button>
+        <div class="points" id="pointsDisplay">Points: 0</div> <!-- Points display -->
+    </div>
+
+    <script>
+        let points = 0; // Initialize points
+
+        function saveGoal() {
+            const goal = document.getElementById('socialGoal').value;
+            if (goal) {
+                const goalList = document.getElementById('goalList');
+                const listItem = document.createElement('li');
+                listItem.textContent = goal;
+                goalList.appendChild(listItem);
+                document.getElementById('socialGoal').value = '';
+                points += 10; // Add points for saving a goal
+                document.getElementById('pointsDisplay').textContent = `Points: ${points}`; // Update points display
+            } else {
+                alert('Please enter a social goal!');
+            }
+        }
+
+        function shareGoals() {
+            const goals = Array.from(document.querySelectorAll('#goalList li')).map(li => li.textContent).join(', ');
+            if (goals) {
+                const shareText = `My social goals for today: ${goals} #SocialConnectionPlanner`;
+                const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+                window.open(url, '_blank'); // Open Twitter share dialog
+            } else {
+                alert('No goals to share!');
+            }
+        }
+    </script>
+</body>
+</html>

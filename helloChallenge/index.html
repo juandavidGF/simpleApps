@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Hello Challenge</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .big-button {
+            transition: all 0.3s ease;
+        }
+        .big-button:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center min-h-screen p-6">
+    <div class="bg-white rounded-lg shadow-xl p-8 max-w-md w-full text-center">
+        <h1 class="text-3xl font-bold mb-6 text-gray-800">Daily Hello Challenge</h1>
+        
+        <div class="mb-8">
+            <p class="text-xl font-semibold mb-2">Today's Interactions</p>
+            <p id="interactions" class="text-6xl font-bold text-blue-600">0</p>
+        </div>
+
+        <button onclick="addInteraction()" class="big-button w-full bg-blue-500 hover:bg-blue-600 text-white py-6 rounded-full text-2xl font-semibold mb-6">
+            👋 Say Hello!
+        </button>
+
+        <div class="flex justify-between items-center mb-4">
+            <div>
+                <p class="font-semibold">Streak</p>
+                <p id="streak" class="text-xl font-bold">0 days</p>
+            </div>
+            <div>
+                <p class="font-semibold">Level</p>
+                <p id="level" class="text-xl font-bold">1</p>
+            </div>
+        </div>
+
+        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+            <div id="progress" class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+        </div>
+        
+        <button onclick="toggleTip()" id="tipButton" class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-full text-lg font-semibold">
+            Show Tip
+        </button>
+        
+        <p id="tip" class="mt-4 text-gray-600 italic hidden"></p>
+    </div>
+
+    <script>
+        let interactions = 0;
+        let streak = 0;
+        let level = 1;
+        let showTip = false;
+
+        const tips = [
+            "Smile when you say hello, it's contagious!",
+            "Try greeting someone new in a place you frequent.",
+            "Don't be discouraged if someone doesn't respond, keep spreading positivity!",
+            "Challenge yourself to learn one new name each day.",
+            "Share a compliment along with your greeting."
+        ];
+
+        function addInteraction() {
+            interactions++;
+            document.getElementById('interactions').textContent = interactions;
+            if (interactions >= level * 5) {
+                level++;
+                document.getElementById('level').textContent = level;
+            }
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progress = (interactions % (level * 5)) / (level * 5) * 100;
+            document.getElementById('progress').style.width = `${progress}%`;
+        }
+
+        function toggleTip() {
+            showTip = !showTip;
+            const tipElement = document.getElementById('tip');
+            const tipButton = document.getElementById('tipButton');
+            if (showTip) {
+                tipElement.textContent = tips[Math.floor(Math.random() * tips.length)];
+                tipElement.classList.remove('hidden');
+                tipButton.textContent = 'Hide Tip';
+            } else {
+                tipElement.classList.add('hidden');
+                tipButton.textContent = 'Show Tip';
+            }
+        }
+
+        // Simulate streak increase (this would normally use actual date checking)
+        setInterval(() => {
+            streak++;
+            document.getElementById('streak').textContent = `${streak} days`;
+        }, 5000); // Every 5 seconds for demo purposes
+    </script>
+</body>
+</html>

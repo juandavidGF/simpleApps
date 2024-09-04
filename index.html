@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Simple Apps</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-4xl font-bold mb-8 text-center text-gray-800">My Simple Apps</h1>
+        
+        <div id="app-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </div>
+
+    <script>
+        const indexedFiles = {
+            "30daychallenge": {
+                "index": "30daychallenge/index.html"
+            },
+            "day29-2.html": "day29-2.html",
+            "day29-3.html": "day29-3.html",
+            "day29.html": "day29.html",
+            "day30.html": "day30.html",
+            "helloChallenge": {
+                "index": "helloChallenge/index.html"
+            },
+            "ipAddress": {
+                "index": "ipAddress/index.html"
+            },
+            "mindfulmomentsreminder": {
+                "index": "mindfulmomentsreminder/index.html"
+            },
+            "moodBoost": {
+                "index": "moodBoost/index.html"
+            },
+            "pomodoroTimer": {
+                "index": "pomodoroTimer/index.html"
+            },
+            "quoteGenerator": {
+                "index": "quoteGenerator/index.html",
+                "indexapi.html": "quoteGenerator/indexapi.html"
+            },
+            "randomChallengerGenerator": {
+                "index": "randomChallengerGenerator/index.html"
+            },
+            "socialBlocker": {
+                "index": "socialBlocker/index.html"
+            },
+            "token-counter": {
+                "index2.html": "token-counter/index2.html"
+            },
+            "word-counter": {
+                "index": "word-counter/index.html"
+            },
+            "yes-no": {
+                "index": "yes-no/index.html",
+                "index2.html": "yes-no/index2.html"
+            }
+        };
+
+        console.log('Data loaded successfully:', indexedFiles);
+        const appCardsContainer = document.getElementById('app-cards');
+        for (const [key, value] of Object.entries(indexedFiles)) {
+            console.log(`Processing key: ${key}, value:`, value);
+            if (typeof value === 'object' && value.index) {
+                const card = document.createElement('a');
+                card.href = value.index;
+                card.className = 'bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden transform hover:scale-105';
+                card.innerHTML = `
+                    <div class="p-6">
+                        <h2 class="text-2xl font-semibold mb-2 text-gray-800">${key.replace(/([A-Z])/g, ' $1')}</h2>
+                        <p class="text-gray-600">Description for ${key}.</p>
+                    </div>
+                `;
+                appCardsContainer.appendChild(card);
+                console.log(`Card created for ${key} with link: ${value.index}`);
+            } else if (typeof value === 'string') {
+                const card = document.createElement('a');
+                card.href = value;
+                card.className = 'bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden transform hover:scale-105';
+                card.innerHTML = `
+                    <div class="p-6">
+                        <h2 class="text-2xl font-semibold mb-2 text-gray-600">${key.replace('.html', '').replace(/([A-Z])/g, ' $1')}</h2>
+                        <p class="text-gray-600">Description for ${key.replace('.html', '')}.</p>
+                    </div>
+                `;
+                appCardsContainer.appendChild(card);
+                console.log(`Card created for ${key} with link: ${value}`);
+            }
+        }
+        if (appCardsContainer.children.length === 0) {
+            console.warn('No app cards were created. Check the JSON structure.');
+        }
+    </script>
+</body>
+</html>

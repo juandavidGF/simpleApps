@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Time Blocker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        input, select, button {
+            margin: 10px 0;
+            padding: 5px;
+        }
+        #schedule {
+            margin-top: 20px;
+        }
+        .event {
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Social Time Blocker</h1>
+    <p>Schedule your social activities to maintain a healthy work-life balance.</p>
+    
+    <input type="text" id="activity" placeholder="Social Activity">
+    <input type="date" id="date">
+    <select id="time">
+        <option value="morning">Morning</option>
+        <option value="afternoon">Afternoon</option>
+        <option value="evening">Evening</option>
+    </select>
+    <button onclick="addEvent()">Add to Schedule</button>
+
+    <div id="schedule"></div>
+
+    <script>
+        let events = [];
+
+        function addEvent() {
+            const activity = document.getElementById('activity').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+
+            if (activity && date) {
+                events.push({ activity, date, time });
+                updateSchedule();
+                document.getElementById('activity').value = '';
+                document.getElementById('date').value = '';
+            } else {
+                alert('Please fill in all fields');
+            }
+        }
+
+        function updateSchedule() {
+            const scheduleDiv = document.getElementById('schedule');
+            scheduleDiv.innerHTML = '<h2>Your Social Schedule</h2>';
+            events.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            events.forEach(event => {
+                const eventDiv = document.createElement('div');
+                eventDiv.className = 'event';
+                eventDiv.textContent = `${event.date}: ${event.activity} (${event.time})`;
+                scheduleDiv.appendChild(eventDiv);
+            });
+        }
+    </script>
+</body>
+</html>

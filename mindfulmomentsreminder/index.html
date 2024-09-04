@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindful Moment Reminders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f8ff;
+        }
+        #reminder {
+            font-size: 1.5em;
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div id="reminder">Your next mindful reminder will appear soon...</div>
+
+<script>
+    // List of reminders
+    const reminders = [
+        "Take a deep breath.",
+        "Think of one thing you're grateful for.",
+        "Stand up and stretch for a minute.",
+        "Send a quick message to someone you care about.",
+        "Step outside for some fresh air.",
+        "Close your eyes and relax for a moment.",
+        "Reflect on something positive that happened today."
+    ];
+
+    // Function to show a random reminder
+    function showReminder() {
+        const randomIndex = Math.floor(Math.random() * reminders.length);
+        document.getElementById('reminder').innerText = reminders[randomIndex];
+    }
+
+    // Set an interval to show a reminder every hour (3600000 ms)
+    setInterval(showReminder, 3600000); // Adjust the time as needed
+
+    // Show a reminder immediately when the page loads
+    showReminder();
+</script>
+
+</body>
+</html>
+

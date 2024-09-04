@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yes or No Roulette</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        .roulette {
+            width: 200px;
+            height: 200px;
+            border: 10px solid #333;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            background-color: white;
+            transition: transform 4s ease;
+        }
+        .button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="roulette" id="roulette">?</div>
+        <button class="button" onclick="spinRoulette()">Spin the Roulette</button>
+    </div>
+
+    <script>
+        function spinRoulette() {
+            const roulette = document.getElementById('roulette');
+            const options = ['Yes', 'No'];
+            const randomIndex = Math.floor(Math.random() * options.length);
+            const selectedOption = options[randomIndex];
+
+            // Spin effect
+            roulette.style.transform = 'rotate(720deg)';
+            
+            setTimeout(() => {
+                roulette.style.transform = 'rotate(0deg)';
+                roulette.textContent = selectedOption;
+            }, 4000);
+        }
+    </script>
+</body>
+</html>

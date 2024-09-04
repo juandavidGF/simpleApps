@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Reflection Journal</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-2xl max-w-md w-full my-8"> <!-- Added my-8 for vertical margin -->
+        <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Daily Reflection Journal</h1>
+        <label for="mood" class="block font-semibold text-gray-700">How do you feel today?</label>
+        <select id="mood" class="w-full p-2 border border-gray-300 rounded mb-4">
+            <option value="happy">Happy</option>
+            <option value="sad">Sad</option>
+            <option value="neutral">Neutral</option>
+        </select>
+        <label for="entry" class="block font-semibold text-gray-700">Your Reflection:</label>
+        <textarea id="entry" placeholder="What did you accomplish today?" rows="4" class="w-full p-2 border border-gray-300 rounded mb-4"></textarea>
+        <label for="goals" class="block font-semibold text-gray-700">Goals for Tomorrow:</label>
+        <textarea id="goals" placeholder="What do you want to achieve tomorrow?" rows="4" class="w-full p-2 border border-gray-300 rounded mb-4"></textarea>
+        <button onclick="saveEntry()" class="w-full bg-blue-500 text-white py-2 rounded-full hover:bg-blue-600 transition duration-300">Save Entry</button>
+        <h2 class="text-2xl font-semibold mt-6 text-center text-gray-800">Your Entries</h2>
+        <ul id="entryList" class="mt-4"></ul>
+    </div>
+
+    <script>
+        function saveEntry() {
+            const mood = document.getElementById('mood').value;
+            const entry = document.getElementById('entry').value;
+            const goals = document.getElementById('goals').value;
+            const date = new Date().toLocaleDateString();
+            if (entry) {
+                const entryList = document.getElementById('entryList');
+                const listItem = document.createElement('li');
+                listItem.className = "p-4 mb-2 bg-gray-100 rounded shadow";
+                listItem.innerHTML = `
+                    <p>
+                        <span class="font-bold">${date}</span> | 
+                        <span class="font-semibold">Mood:</span> ${mood} | 
+                        <span class="font-semibold">Reflection:</span> ${entry} | 
+                        <span class="font-semibold">Goals:</span> ${goals}
+                    </p>
+                `;
+                entryList.appendChild(listItem);
+                document.getElementById('entry').value = '';
+                document.getElementById('goals').value = '';
+            } else {
+                alert('Please write a reflection!');
+            }
+        }
+    </script>
+</body>
+</html>

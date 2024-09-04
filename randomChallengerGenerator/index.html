@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Social Challenge Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        #challenge {
+            font-size: 1.2em;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Random Social Challenge Generator</h1>
+    <p>Click the button to get a new social challenge for today!</p>
+    <div id="challenge">Your social challenge will appear here</div>
+    <button onclick="generateChallenge()">Get New Challenge</button>
+
+    <script>
+        const challenges = [
+            "Strike up a conversation with a stranger in a coffee shop",
+            "Attend a local meetup event in your area of interest",
+            "Reach out to an old friend you haven't spoken to in a while",
+            "Join an online forum or community related to your hobbies",
+            "Volunteer for a local charity or community event",
+            "Take a class or workshop to learn a new skill and meet people",
+            "Organize a virtual game night with colleagues or acquaintances",
+            "Compliment three different people today",
+            "Share an interesting article or idea on social media and engage with responses",
+            "Invite a neighbor or coworker for a walk or coffee",
+            "Join a local sports team or fitness class",
+            "Attend a networking event in your industry",
+            "Host a small dinner party or potluck",
+            "Start a conversation in an elevator or waiting line",
+            "Offer help to someone who seems to need it"
+        ];
+
+        function generateChallenge() {
+            const challengeElement = document.getElementById('challenge');
+            const randomIndex = Math.floor(Math.random() * challenges.length);
+            challengeElement.textContent = challenges[randomIndex];
+        }
+    </script>
+</body>
+</html>

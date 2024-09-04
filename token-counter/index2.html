@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robust Token Counter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        #result {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        #tokenDisplay {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 100px;
+            word-wrap: break-word;
+        }
+        .token {
+            display: inline-block;
+            margin: 2px;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Robust Token Counter</h1>
+    <p>Enter your text below to count tokens and see their representation:</p>
+    <textarea id="inputText" placeholder="Type or paste your text here..."></textarea>
+    <div id="result">Token count: 0</div>
+    <div id="tokenDisplay"></div>
+
+    <script>
+        let useFallbackTokenizer = true;
+
+        // Attempt to load js-tiktoken
+        const script = document.createElement('script');
+        script.src = "https://cdn.jsdelivr.net/npm/js-tiktoken/dist/tiktoken.js";
+        script.onload = () => {
+            tiktoken.init().then(() => {
+                useFallbackTokenizer = false;
+                console.log("js-tiktoken loaded successfully");
+            }).catch(err => {
+                console.error("Failed to initialize js-tiktoken:", err);
+            });
+        };
+        script.onerror = () => {
+            console.error("Failed to load js-tiktoken");
+        };
+        document.head.appendChild(script);
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function fallbackTokenize(text) {
+            return text.match(/\S+|\s+/g) || [];
+        }
+
+        function updateTokenCount() {
+            const text = document.getElementById('inputText').value;
+            let tokens;
+
+            if (useFallbackTokenizer) {
+                tokens = fallbackTokenize(text);
+            } else {
+                const cl100k_base = tiktoken.get_encoding("cl100k_base");
+                tokens = cl100k_base.encode(text);
+            }
+
+            document.getElementById('result').textContent = `Token count: ${tokens.length}`;
+
+            const tokenDisplay = document.getElementById('tokenDisplay');
+            tokenDisplay.innerHTML = '';
+            tokens.forEach(token => {
+                const tokenSpan = document.createElement('span');
+                tokenSpan.className = 'token';
+                tokenSpan.style.backgroundColor = getRandomColor();
+                tokenSpan.textContent = useFallbackTokenizer ? token : tiktoken.get_encoding("cl100k_base").decode([token]);
+                tokenDisplay.appendChild(tokenSpan);
+            });
+        }
+
+        document.getElementById('inputText').addEventListener('input', updateTokenCount);
+    </script>
+</body>
+</html>

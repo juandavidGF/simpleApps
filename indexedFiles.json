@@ -1,0 +1,44 @@
+{
+  "30daychallenge": {
+    "index": "30daychallenge/index.html"
+  },
+  "day29-2.html": "day29-2.html",
+  "day29-3.html": "day29-3.html",
+  "day29.html": "day29.html",
+  "day30.html": "day30.html",
+  "helloChallenge": {
+    "index": "helloChallenge/index.html"
+  },
+  "ipAddress": {
+    "index": "ipAddress/index.html"
+  },
+  "mindfulmomentsreminder": {
+    "index": "mindfulmomentsreminder/index.html"
+  },
+  "moodBoost": {
+    "index": "moodBoost/index.html"
+  },
+  "pomodoroTimer": {
+    "index": "pomodoroTimer/index.html"
+  },
+  "quoteGenerator": {
+    "index": "quoteGenerator/index.html",
+    "indexapi.html": "quoteGenerator/indexapi.html"
+  },
+  "randomChallengerGenerator": {
+    "index": "randomChallengerGenerator/index.html"
+  },
+  "socialBlocker": {
+    "index": "socialBlocker/index.html"
+  },
+  "token-counter": {
+    "index2.html": "token-counter/index2.html"
+  },
+  "word-counter": {
+    "index": "word-counter/index.html"
+  },
+  "yes-no": {
+    "index": "yes-no/index.html",
+    "index2.html": "yes-no/index2.html"
+  }
+}

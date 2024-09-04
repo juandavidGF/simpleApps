@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30-Day Challenge Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-2xl max-w-md w-full">
+        <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">30-Day Challenge Generator</h1>
+        <div id="challenge" class="text-xl mb-4 text-center font-semibold text-gray-700"></div>
+        <div class="flex justify-center mb-6">
+            <button id="roll" class="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition duration-300">Roll New Challenge</button>
+        </div>
+        <button id="accept" class="w-full bg-green-500 text-white py-2 rounded-full mb-4 hover:bg-green-600 transition duration-300 hidden">Accept Challenge</button>
+        <div id="progress" class="hidden">
+            <div class="mb-2 text-gray-700">Progress: <span id="day-count">0</span>/30 days</div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+            </div>
+        </div>
+        <div id="quote" class="mt-6 text-center text-gray-600 italic"></div>
+        <button id="share" class="w-full mt-4 bg-indigo-500 text-white py-2 rounded-full hover:bg-indigo-600 transition duration-300">Share on Twitter</button>
+    </div>
+    <script>
+        const challenges = [
+            "Write 500 words every day",
+            "Meditate for 10 minutes daily",
+            "Learn 5 new words in a foreign language daily",
+            "Do 50 pushups every day",
+            "Read 20 pages of a book daily",
+            "Take a daily photo of something that makes you smile",
+            "Practice gratitude by writing down 3 things you're thankful for each day",
+            "Try a new healthy recipe every day",
+            "Compliment a different person each day",
+            "Do a random act of kindness daily"
+        ];
+
+        const quotes = [
+            "The only way to do great work is to love what you do. - Steve Jobs",
+            "Believe you can and you're halfway there. - Theodore Roosevelt",
+            "Success is not final, failure is not fatal: it is the courage to continue that counts. - Winston Churchill",
+            "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt",
+            "Strive not to be a success, but rather to be of value. - Albert Einstein"
+        ];
+
+        let currentChallenge = "";
+        let dayCount = 0;
+
+        const challengeEl = document.getElementById('challenge');
+        const rollBtn = document.getElementById('roll');
+        const acceptBtn = document.getElementById('accept');
+        const progressEl = document.getElementById('progress');
+        const dayCountEl = document.getElementById('day-count');
+        const progressBarEl = document.getElementById('progress-bar');
+        const quoteEl = document.getElementById('quote');
+        const shareBtn = document.getElementById('share');
+
+        function getRandomChallenge() {
+            return challenges[Math.floor(Math.random() * challenges.length)];
+        }
+
+        function getRandomQuote() {
+            return quotes[Math.floor(Math.random() * quotes.length)];
+        }
+
+        function rollChallenge() {
+            currentChallenge = getRandomChallenge();
+            challengeEl.textContent = currentChallenge;
+            acceptBtn.classList.remove('hidden');
+            progressEl.classList.add('hidden');
+            dayCount = 0;
+            updateProgress();
+        }
+
+        function acceptChallenge() {
+            rollBtn.classList.add('hidden');
+            acceptBtn.classList.add('hidden');
+            progressEl.classList.remove('hidden');
+            quoteEl.textContent = getRandomQuote();
+            localStorage.setItem('challenge', currentChallenge);
+            localStorage.setItem('dayCount', dayCount);
+        }
+
+        function updateProgress() {
+            dayCountEl.textContent = dayCount;
+            const progress = (dayCount / 30) * 100;
+            progressBarEl.style.width = `${progress}%`;
+        }
+
+        function shareOnTwitter() {
+            const text = encodeURIComponent(`I'm taking on the "${currentChallenge}" challenge! Day ${dayCount}/30 complete. Join me in the #30DayChallengeGenerator! 💪🚀`);
+            window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+        }
+
+        rollBtn.addEventListener('click', rollChallenge);
+        acceptBtn.addEventListener('click', acceptChallenge);
+        shareBtn.addEventListener('click', shareOnTwitter);
+
+        // Check for existing challenge
+        const savedChallenge = localStorage.getItem('challenge');
+        if (savedChallenge) {
+            currentChallenge = savedChallenge;
+            dayCount = parseInt(localStorage.getItem('dayCount') || '0');
+            challengeEl.textContent = currentChallenge;
+            acceptChallenge();
+            updateProgress();
+        } else {
+            rollChallenge();
+        }
+
+        // Simulate daily progress (for demo purposes)
+        setInterval(() => {
+            if (dayCount < 30) {
+                dayCount++;
+                updateProgress();
+                localStorage.setItem('dayCount', dayCount);
+                quoteEl.textContent = getRandomQuote();
+            }
+        }, 5000); // Update every 5 seconds for demo
+    </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Connection Challenge</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+            margin: 20px 0;
+        }
+        #app {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        button {
+            padding: 12px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .challenge {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 5px;
+        }
+        #grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 20px;
+        }
+        .day {
+            width: 40px;
+            height: 40px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .day:hover {
+            background-color: #d0d0d0;
+        }
+        .completed { background-color: #28a745; } /* Green for completed challenges */
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Social Connection Challenge</h1>
+        <div class="challenge" id="challengeDisplay">Today's Challenge: <span id="challengeText">Click the button to get your challenge!</span></div>
+        <button onclick="getChallenge()">Get New Challenge</button>
+
+        <h2>Challenge Tracker</h2>
+        <div id="grid"></div>
+    </div>
+
+    <script>
+        const challenges = [
+            "Reach out to a friend you haven't spoken to in a while.",
+            "Attend a local event or meetup.",
+            "Start a conversation with a stranger at a coffee shop.",
+            "Compliment someone you see today.",
+            "Join an online community related to your interests."
+        ];
+
+        const challengesCompleted = Array(30).fill(false); // Array to track completed challenges for 30 days
+
+        function getChallenge() {
+            const randomIndex = Math.floor(Math.random() * challenges.length);
+            document.getElementById('challengeText').textContent = challenges[randomIndex];
+        }
+
+        function createGrid() {
+            const grid = document.getElementById('grid');
+            challengesCompleted.forEach((completed, index) => {
+                const dayDiv = document.createElement('div');
+                dayDiv.classList.add('day');
+                if (completed) {
+                    dayDiv.classList.add('completed'); // Add completed class if challenge is done
+                }
+                dayDiv.textContent = index + 1; // Display day number
+                dayDiv.onclick = () => toggleChallenge(index);
+                grid.appendChild(dayDiv);
+            });
+        }
+
+        function toggleChallenge(index) {
+            challengesCompleted[index] = !challengesCompleted[index]; // Toggle completion status
+            updateGrid();
+        }
+
+        function updateGrid() {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = ''; // Clear the grid
+            createGrid(); // Recreate the grid with updated completion status
+        }
+
+        createGrid(); // Initial grid creation
+    </script>
+</body>
+</html>
